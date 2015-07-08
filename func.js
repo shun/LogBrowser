@@ -43,7 +43,7 @@ function setmaker(lat, lng) {
 	}
 }
 
-function drawline(orgcoords) {
+function drawlines(orgcoords) {
 	//線(Polyline)のインスタンスを格納する配列
     var latlng;
 	var polylines = [] ;
@@ -69,7 +69,27 @@ function drawline(orgcoords) {
   paths.setMap(map);
 }
 
-function drawcircle(orgitems) {
+function drawline(splat, splng, edlat, edlng) {
+    var latlng;
+	var array = [ ];
+
+	latlng = new google.maps.LatLng(splat, splng);
+	array.push(latlng);
+	latlng = new google.maps.LatLng(edlat, edlng);
+	array.push(latlng);
+
+	var paths = new google.maps.Polyline({
+		path: array,
+		geodesic: false,
+		strokeColor: '#00FF00',
+		strokeOpacity: 1.0,
+		strokeWeight: 2
+	});
+
+  paths.setMap(map);
+}
+
+function drawcircles(orgitems) {
 	var itemlist = orgitems.split("\n");
 	var items = [];
 
@@ -89,4 +109,19 @@ function drawcircle(orgitems) {
 		new google.maps.Circle(opts);
 	}
 
+}
+
+function drawcircle(lat, lng, radius) {
+	latlng = new google.maps.LatLng(lat, lng);
+
+	var opts = {
+	      strokeColor: '#FF0000',
+	      strokeOpacity: 0.8,
+	      strokeWeight: 2,
+	      fillOpacity: 0.0,
+	      map: map,
+	      center: latlng,
+	      radius: radius
+	    };
+	new google.maps.Circle(opts);
 }
