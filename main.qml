@@ -24,24 +24,72 @@ ApplicationWindow {
             }
         }
     }
-    WebEngineView {
-        id: webview
-        url: "default.html"
-        anchors.fill: parent
-//        width: root.width
-//        height: (root.height - 100) / 2
-    }
-/*
-    ListView {
-        id: list
-        anchors.fill: parent
-        model:dataset
 
-        focus:true
-        highlightMoveDuration: 0
-        highlight: Rectangle {color:"red"; radius:5}
+    FileDialog {
+        id:filedialog
 
-        delegate: itemDelegate
+        onAccepted: {
+            console.debug("accept")
+            visible = false
+        }
+
+        onRejected: {
+            visible = false
+        }
     }
-*/
+
+    SplitView {
+        anchors.fill: parent
+        orientation: Qt.Vertical
+
+        WebEngineView {
+            id: webview
+            url: "default.html"
+            height: root.height / 2
+        }
+
+
+        Rectangle {
+            ListView {
+                id: list
+                model:dataset
+                clip: true
+
+
+                width:root.width / 4 * 3
+                height: root.height / 2
+                x:0
+                focus:true
+                highlightMoveDuration: 0
+                highlightResizeDuration:0
+                highlight: Rectangle {color:"red"; radius:5}
+
+                delegate: itemDelegate
+            }
+
+            Rectangle {
+                id: ctrlpane
+                width:root.width / 4
+                color:"green"
+                x:list.width
+                height: root.height / 2
+
+                Button {
+                    x: 27
+                    y: 8
+                    width: 106
+                    height: 28
+                    text: "load file"
+                    onClicked: {
+                        filedialog.open()
+                        webview.runJavaScript("setposition(43.022188, 141.463268)")
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
 }
