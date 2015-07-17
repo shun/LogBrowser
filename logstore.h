@@ -2,6 +2,7 @@
 #define LOGSTORE_H
 
 #include <QObject>
+#include <QStringList>
 
 class LogStore : public QObject
 {

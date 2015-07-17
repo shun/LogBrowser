@@ -12,8 +12,8 @@ LogStore::LogStore(QObject *parent) : QObject(parent)
 
 void LogStore::loadfile(QString path)
 {
-    path.remove(0, 8);  // "file:///"の部分を削除
-    ifstream ifs(path.toStdString());
+    path.remove(0, 7);  // "file:///"の部分を削除
+    ifstream ifs(path.toUtf8());
     string line;
     QString lat, lng;
     QString str;

@@ -1,4 +1,4 @@
-import QtQuick 2.5
+import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
@@ -87,9 +87,10 @@ ApplicationWindow {
             id: webview
             url: "default.html"
             height: root.height / 2
+            focus: false
 
             onFocusChanged: {
-                focus = false
+                webview.focus = false
                 list.focus = true
             }
         }
@@ -102,7 +103,7 @@ ApplicationWindow {
 
 
                 width:root.width / 4 * 3
-                height: root.height / 2
+                height: root.height - webview.height
                 x:0
                 focus:true
                 highlightMoveDuration: 0
@@ -116,6 +117,10 @@ ApplicationWindow {
                     var items = line.split(",")
                     var func = "setmaker(" + items[2] + "," + items[3] + ")"
                     webview.runJavaScript(func)
+                }
+                onFocusChanged: {
+                    webview.focus = false
+                    list.focus = true
                 }
                 Keys.onPressed: {
                     if (event.key == Qt.Key_PageUp) {
@@ -133,7 +138,7 @@ ApplicationWindow {
                 width:root.width / 4
                 color:"lightgray"
                 x:list.width
-                height: root.height / 2
+                height: root.height - webview.height
 
                 Button {
                     x: 27
